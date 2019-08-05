@@ -20,6 +20,7 @@ use Symfony\Component\Ldap\LdapInterface;
 use Symfony\Component\Security\Core\User\LdapUserProvider;
 
 /**
+ * @group legacy
  * @requires extension ldap
  */
 class LdapUserProviderTest extends TestCase
