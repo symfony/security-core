@@ -82,33 +82,21 @@ final class User implements UserInterface, EquatableInterface
         return $this->username;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isAccountNonExpired(): bool
     {
         return $this->accountNonExpired;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isAccountNonLocked(): bool
     {
         return $this->accountNonLocked;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCredentialsNonExpired(): bool
     {
         return $this->credentialsNonExpired;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
