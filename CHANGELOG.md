@@ -5,6 +5,8 @@ CHANGELOG
 ---
 
  * Add support for enums in `SignatureHasher::computeSignatureHash()`
+ * Add `getParentRoleNames()` method to `RoleHierarchyInterface`
+ * Make `RoleHierarchyInterface::getReachableRoleNames()` return roles as both keys and values
 
 8.0
 ---
