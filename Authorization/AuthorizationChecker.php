@@ -24,20 +24,28 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class AuthorizationChecker implements AuthorizationCheckerInterface
 {
+    private array $accessDecisionStack = [];
+
     public function __construct(
         private TokenStorageInterface $tokenStorage,
         private AccessDecisionManagerInterface $accessDecisionManager,
     ) {
     }
 
-    final public function isGranted(mixed $attribute, mixed $subject = null): bool
+    final public function isGranted(mixed $attribute, mixed $subject = null, ?AccessDecision $accessDecision = null): bool
     {
         $token = $this->tokenStorage->getToken();
 
         if (!$token || !$token->getUser()) {
             $token = new NullToken();
         }
+        $accessDecision ??= end($this->accessDecisionStack) ?: new AccessDecision();
+        $this->accessDecisionStack[] = $accessDecision;
 
-        return $this->accessDecisionManager->decide($token, [$attribute], $subject);
+        try {
+            return $accessDecision->isGranted = $this->accessDecisionManager->decide($token, [$attribute], $subject, $accessDecision);
+        } finally {
+            array_pop($this->accessDecisionStack);
+        }
     }
 }

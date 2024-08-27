@@ -9,6 +9,7 @@ CHANGELOG
  * Add `OfflineTokenInterface` to mark tokens that do not represent the currently logged-in user
  * Deprecate `UserInterface::eraseCredentials()` and `TokenInterface::eraseCredentials()`,
    erase credentials e.g. using `__serialize()` instead
+ * Add ability for voters to explain their vote
 
 7.2
 ---
