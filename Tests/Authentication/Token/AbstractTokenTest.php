@@ -11,8 +11,9 @@
 
 namespace Symfony\Component\Security\Core\Tests\Authentication\Token;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\ExpectUserDeprecationMessageTrait;
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\InMemoryUser;
@@ -20,8 +21,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AbstractTokenTest extends TestCase
 {
-    use ExpectUserDeprecationMessageTrait;
-
     /**
      * @dataProvider provideUsers
      */
@@ -37,9 +36,8 @@ class AbstractTokenTest extends TestCase
         yield [new InMemoryUser('fabien', null), 'fabien'];
     }
 
-    /**
-     * @group legacy
-     */
+    #[IgnoreDeprecations]
+    #[Group('legacy')]
     public function testEraseCredentials()
     {
         $token = new ConcreteToken(['ROLE_FOO']);

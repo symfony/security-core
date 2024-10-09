@@ -11,6 +11,8 @@
 
 namespace Symfony\Component\Security\Core\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -43,9 +45,8 @@ class UserPasswordTest extends TestCase
         yield 'attribute' => [$metadata->properties['b']->constraints[0]];
     }
 
-    /**
-     * @group legacy
-     */
+    #[IgnoreDeprecations]
+    #[Group('legacy')]
     public function testValidatedByServiceDoctrineStyle()
     {
         self::assertSame('my_service', (new UserPassword(['service' => 'my_service']))->validatedBy());
