@@ -10,6 +10,7 @@ CHANGELOG
  * Deprecate `UserInterface::eraseCredentials()` and `TokenInterface::eraseCredentials()`,
    erase credentials e.g. using `__serialize()` instead
  * Add ability for voters to explain their vote
+ * Add support for voting on closures
 
 7.2
 ---
