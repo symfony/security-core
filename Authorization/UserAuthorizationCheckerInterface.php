@@ -25,5 +25,5 @@ interface UserAuthorizationCheckerInterface
      *
      * @param mixed $attribute A single attribute to vote on (can be of any type, string and instance of Expression are supported by the core)
      */
-    public function userIsGranted(UserInterface $user, mixed $attribute, mixed $subject = null): bool;
+    public function isGrantedForUser(UserInterface $user, mixed $attribute, mixed $subject = null): bool;
 }

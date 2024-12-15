@@ -43,7 +43,7 @@ class UserAuthorizationCheckerTest extends TestCase
             ->with($this->callback(fn (UserAuthorizationCheckerToken $token): bool => $user === $token->getUser()), $this->identicalTo(['ROLE_FOO']))
             ->willReturn($decide);
 
-        $this->assertSame($decide, $this->authorizationChecker->userIsGranted($user, 'ROLE_FOO'));
+        $this->assertSame($decide, $this->authorizationChecker->isGrantedForUser($user, 'ROLE_FOO'));
     }
 
     public static function isGrantedProvider(): array
@@ -65,6 +65,6 @@ class UserAuthorizationCheckerTest extends TestCase
             ->method('decide')
             ->with($this->isInstanceOf($token::class), $this->identicalTo([$attribute]))
             ->willReturn(true);
-        $this->assertTrue($this->authorizationChecker->userIsGranted($token->getUser(), $attribute));
+        $this->assertTrue($this->authorizationChecker->isGrantedForUser($token->getUser(), $attribute));
     }
 }
