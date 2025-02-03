@@ -31,6 +31,12 @@ final class CustomUser implements UserInterface
         return $this->roles;
     }
 
+    public function getPassword(): ?string
+    {
+        return null;
+    }
+
+    #[\Deprecated]
     public function eraseCredentials(): void
     {
     }

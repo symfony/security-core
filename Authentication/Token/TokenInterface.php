@@ -16,6 +16,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * TokenInterface is the interface for the user authentication information.
  *
+ * The __serialize/__unserialize() magic methods can be implemented on the token
+ * class to prevent sensitive credentials from being put in the session storage.
+ *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
@@ -57,8 +60,7 @@ interface TokenInterface extends \Stringable
     /**
      * Removes sensitive information from the token.
      *
-     * @deprecated since Symfony 7.3, use a dedicated DTO instead or implement your
-     *             own erasing logic instead
+     * @deprecated since Symfony 7.3; erase credentials using the "__serialize()" method instead
      */
     public function eraseCredentials(): void;
 
