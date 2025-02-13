@@ -10,6 +10,7 @@ CHANGELOG
    erase credentials e.g. using `__serialize()` instead
  * Add ability for voters to explain their vote
  * Add support for voting on closures
+ * Add `OAuth2User` with OAuth2 Access Token Introspection support for `OAuth2TokenHandler`
 
 7.2
 ---
