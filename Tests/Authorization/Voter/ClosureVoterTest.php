@@ -12,13 +12,16 @@
 namespace Symfony\Component\Security\Core\Tests\Authorization\Voter;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolverInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\ClosureVoter;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGrantedContext;
 
+/**
+ * @requires function Symfony\Component\Security\Http\Attribute\IsGrantedContext::isGranted
+ */
 class ClosureVoterTest extends TestCase
 {
     private ClosureVoter $voter;
@@ -26,8 +29,7 @@ class ClosureVoterTest extends TestCase
     protected function setUp(): void
     {
         $this->voter = new ClosureVoter(
-            $this->createMock(AccessDecisionManagerInterface::class),
-            $this->createMock(AuthenticationTrustResolverInterface::class),
+            $this->createMock(AuthorizationCheckerInterface::class),
         );
     }
 
@@ -49,7 +51,7 @@ class ClosureVoterTest extends TestCase
         $this->assertSame(VoterInterface::ACCESS_DENIED, $this->voter->vote(
             $token,
             null,
-            [fn (...$vars) => false]
+            [fn () => false]
         ));
     }
 
@@ -62,7 +64,7 @@ class ClosureVoterTest extends TestCase
         $this->assertSame(VoterInterface::ACCESS_GRANTED, $this->voter->vote(
             $token,
             null,
-            [fn (...$vars) => true]
+            [fn () => true]
         ));
     }
 
@@ -77,12 +79,8 @@ class ClosureVoterTest extends TestCase
         $this->voter->vote(
             $token,
             $outerSubject,
-            [function (...$vars) use ($outerSubject) {
-                $this->assertInstanceOf(TokenInterface::class, $vars['token']);
-                $this->assertSame($outerSubject, $vars['subject']);
-
-                $this->assertInstanceOf(AccessDecisionManagerInterface::class, $vars['accessDecisionManager']);
-                $this->assertInstanceOf(AuthenticationTrustResolverInterface::class, $vars['trustResolver']);
+            [function (IsGrantedContext $context, \stdClass $subject) use ($outerSubject) {
+                $this->assertSame($outerSubject, $subject);
 
                 return true;
             }]

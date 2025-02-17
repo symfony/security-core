@@ -11,20 +11,13 @@
 
 namespace Symfony\Component\Security\Core\Authorization\Voter;
 
-use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolverInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Http\Attribute\IsGrantedContext;
 
 /**
  * This voter allows using a closure as the attribute being voted on.
- *
- * The following named arguments are passed to the closure:
- *
- * - `token`: The token being used for voting
- * - `subject`: The subject of the vote
- * - `accessDecisionManager`: The access decision manager
- * - `trustResolver`: The trust resolver
  *
  * @see IsGranted doc for the complete closure signature.
  *
@@ -33,8 +26,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class ClosureVoter implements CacheableVoterInterface
 {
     public function __construct(
-        private AccessDecisionManagerInterface $accessDecisionManager,
-        private AuthenticationTrustResolverInterface $trustResolver,
+        private AuthorizationCheckerInterface $authorizationChecker,
     ) {
     }
 
@@ -51,6 +43,7 @@ final class ClosureVoter implements CacheableVoterInterface
     public function vote(TokenInterface $token, mixed $subject, array $attributes, ?Vote $vote = null): int
     {
         $vote ??= new Vote();
+        $context = new IsGrantedContext($token, $token->getUser(), $this->authorizationChecker);
         $failingClosures = [];
         $result = VoterInterface::ACCESS_ABSTAIN;
         foreach ($attributes as $attribute) {
@@ -60,7 +53,7 @@ final class ClosureVoter implements CacheableVoterInterface
 
             $name = (new \ReflectionFunction($attribute))->name;
             $result = VoterInterface::ACCESS_DENIED;
-            if ($attribute(token: $token, subject: $subject, accessDecisionManager: $this->accessDecisionManager, trustResolver: $this->trustResolver)) {
+            if ($attribute($context, $subject)) {
                 $vote->reasons[] = \sprintf('Closure %s returned true.', $name);
 
                 return VoterInterface::ACCESS_GRANTED;
