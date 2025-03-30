@@ -6,6 +6,8 @@ CHANGELOG
 
  * Add `MermaidDumper` to dump Role Hierarchy graphs in the Mermaid.js flowchart format
  * Deprecate `PersistentTokenInterface::getClass()`, the user class will be removed from the remember-me cookie in 8.0
+ * Add `extraData` property to `Vote` objects
+ * Add argument `$accessDecision` to `AccessDecisionStrategyInterface`
 
 7.3
 ---
