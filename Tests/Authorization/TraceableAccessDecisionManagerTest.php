@@ -305,7 +305,7 @@ class TraceableAccessDecisionManagerTest extends TestCase
         $this->assertFalse($isGranted);
     }
 
-    public function allowMultipleAttributesProvider(): \Generator
+    public static function allowMultipleAttributesProvider(): \Generator
     {
         yield [
             ['attr1'],
