@@ -45,11 +45,10 @@ class AuthenticatedVoter implements CacheableVoterInterface
      */
     public function vote(TokenInterface $token, mixed $subject, array $attributes/* , ?Vote $vote = null */): int
     {
-        $vote = 3 < \func_num_args() ? func_get_arg(3) : new Vote();
-        $vote ??= new Vote();
+        $vote = 3 < \func_num_args() ? func_get_arg(3) : null;
 
         if ($attributes === [self::PUBLIC_ACCESS]) {
-            $vote->reasons[] = 'Access is public.';
+            $vote?->addReason('Access is public.');
 
             return VoterInterface::ACCESS_GRANTED;
         }
@@ -73,7 +72,7 @@ class AuthenticatedVoter implements CacheableVoterInterface
             if ((self::IS_AUTHENTICATED_FULLY === $attribute || self::IS_AUTHENTICATED_REMEMBERED === $attribute)
                 && $this->authenticationTrustResolver->isFullFledged($token)
             ) {
-                $vote->reasons[] = 'The user is fully authenticated.';
+                $vote?->addReason('The user is fully authenticated.');
 
                 return VoterInterface::ACCESS_GRANTED;
             }
@@ -81,32 +80,32 @@ class AuthenticatedVoter implements CacheableVoterInterface
             if (self::IS_AUTHENTICATED_REMEMBERED === $attribute
                 && $this->authenticationTrustResolver->isRememberMe($token)
             ) {
-                $vote->reasons[] = 'The user is remembered.';
+                $vote?->addReason('The user is remembered.');
 
                 return VoterInterface::ACCESS_GRANTED;
             }
 
             if (self::IS_AUTHENTICATED === $attribute && $this->authenticationTrustResolver->isAuthenticated($token)) {
-                $vote->reasons[] = 'The user is authenticated.';
+                $vote?->addReason('The user is authenticated.');
 
                 return VoterInterface::ACCESS_GRANTED;
             }
 
             if (self::IS_REMEMBERED === $attribute && $this->authenticationTrustResolver->isRememberMe($token)) {
-                $vote->reasons[] = 'The user is remembered.';
+                $vote?->addReason('The user is remembered.');
 
                 return VoterInterface::ACCESS_GRANTED;
             }
 
             if (self::IS_IMPERSONATOR === $attribute && $token instanceof SwitchUserToken) {
-                $vote->reasons[] = 'The user is impersonating another user.';
+                $vote?->addReason('The user is impersonating another user.');
 
                 return VoterInterface::ACCESS_GRANTED;
             }
         }
 
         if (VoterInterface::ACCESS_DENIED === $result) {
-            $vote->reasons[] = 'The user is not appropriately authenticated.';
+            $vote?->addReason('The user is not appropriately authenticated.');
         }
 
         return $result;

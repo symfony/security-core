@@ -49,8 +49,7 @@ class ExpressionVoter implements CacheableVoterInterface
      */
     public function vote(TokenInterface $token, mixed $subject, array $attributes/* , ?Vote $vote = null */): int
     {
-        $vote = 3 < \func_num_args() ? func_get_arg(3) : new Vote();
-        $vote ??= new Vote();
+        $vote = 3 < \func_num_args() ? func_get_arg(3) : null;
         $result = VoterInterface::ACCESS_ABSTAIN;
         $variables = null;
         $failingExpressions = [];
@@ -64,7 +63,7 @@ class ExpressionVoter implements CacheableVoterInterface
             $result = VoterInterface::ACCESS_DENIED;
 
             if ($this->expressionLanguage->evaluate($attribute, $variables)) {
-                $vote->reasons[] = \sprintf('Expression (%s) is true.', $attribute);
+                $vote?->addReason(\sprintf('Expression (%s) is true.', $attribute));
 
                 return VoterInterface::ACCESS_GRANTED;
             }
@@ -73,7 +72,7 @@ class ExpressionVoter implements CacheableVoterInterface
         }
 
         if ($failingExpressions) {
-            $vote->reasons[] = \sprintf('Expression (%s) is false.', implode(') || (', $failingExpressions));
+            $vote?->addReason(\sprintf('Expression (%s) is false.', implode(') || (', $failingExpressions)));
         }
 
         return $result;
