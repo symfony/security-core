@@ -62,7 +62,7 @@ class InMemoryUserTest extends TestCase
     public function testEraseCredentials()
     {
         $user = new InMemoryUser('fabien', 'superpass');
-        $this->expectUserDeprecationMessage(\sprintf('%sMethod %s::eraseCredentials() is deprecated since symfony/security-core 7.3', \PHP_VERSION_ID >= 80400 ? 'Unsilenced deprecation: ' : '', InMemoryUser::class));
+        $this->expectUserDeprecationMessage(\sprintf('Unsilenced deprecation: Method %s::eraseCredentials() is deprecated since symfony/security-core 7.3', InMemoryUser::class));
         $user->eraseCredentials();
         $this->assertEquals('superpass', $user->getPassword());
     }

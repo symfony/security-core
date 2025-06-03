@@ -77,9 +77,6 @@ class OidcUser implements UserInterface
     #[\Deprecated(since: 'symfony/security-core 7.3')]
     public function eraseCredentials(): void
     {
-        if (\PHP_VERSION_ID < 80400) {
-            @trigger_error(\sprintf('Method %s::eraseCredentials() is deprecated since symfony/security-core 7.3', self::class), \E_USER_DEPRECATED);
-        }
     }
 
     public function getSub(): ?string
