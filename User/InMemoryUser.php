@@ -74,14 +74,6 @@ final class InMemoryUser implements UserInterface, PasswordAuthenticatedUserInte
         return $this->enabled;
     }
 
-    /**
-     * @deprecated since Symfony 7.3
-     */
-    #[\Deprecated(since: 'symfony/security-core 7.3')]
-    public function eraseCredentials(): void
-    {
-    }
-
     public function isEqualTo(UserInterface $user): bool
     {
         if (!$user instanceof self) {

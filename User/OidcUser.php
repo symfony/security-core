@@ -71,14 +71,6 @@ class OidcUser implements UserInterface
         return (string) ($this->userIdentifier ?? $this->getSub());
     }
 
-    /**
-     * @deprecated since Symfony 7.3
-     */
-    #[\Deprecated(since: 'symfony/security-core 7.3')]
-    public function eraseCredentials(): void
-    {
-    }
-
     public function getSub(): ?string
     {
         return $this->sub;

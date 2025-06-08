@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+8.0
+---
+
+ * Remove `UserInterface::eraseCredentials()` and `TokenInterface::eraseCredentials()`,
+  erase credentials e.g. using `__serialize()` instead
+
 7.3
 ---
 

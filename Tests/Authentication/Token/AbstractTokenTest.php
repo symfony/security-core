@@ -37,22 +37,6 @@ class AbstractTokenTest extends TestCase
         yield [new InMemoryUser('fabien', null), 'fabien'];
     }
 
-    /**
-     * @group legacy
-     */
-    public function testEraseCredentials()
-    {
-        $token = new ConcreteToken(['ROLE_FOO']);
-
-        $user = $this->createMock(UserInterface::class);
-        $user->expects($this->once())->method('eraseCredentials');
-        $token->setUser($user);
-
-        $this->expectUserDeprecationMessage(\sprintf('Since symfony/security-core 7.3: The "%s::eraseCredentials()" method is deprecated and will be removed in 8.0, erase credentials using the "__serialize()" method instead.', TokenInterface::class));
-
-        $token->eraseCredentials();
-    }
-
     public function testSerialize()
     {
         $token = new ConcreteToken(['ROLE_FOO', 'ROLE_BAR']);
