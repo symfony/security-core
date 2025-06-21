@@ -43,14 +43,6 @@ class UserPasswordTest extends TestCase
         yield 'attribute' => [$metadata->properties['b']->constraints[0]];
     }
 
-    /**
-     * @group legacy
-     */
-    public function testValidatedByServiceDoctrineStyle()
-    {
-        self::assertSame('my_service', (new UserPassword(['service' => 'my_service']))->validatedBy());
-    }
-
     public function testAttributes()
     {
         $metadata = new ClassMetadata(UserPasswordDummy::class);
