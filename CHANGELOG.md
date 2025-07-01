@@ -4,6 +4,7 @@ CHANGELOG
 8.0
 ---
 
+ * Remove `RememberMeToken::getSecret()`
  * Remove `UserInterface::eraseCredentials()` and `TokenInterface::eraseCredentials()`,
   erase credentials e.g. using `__serialize()` instead
 
