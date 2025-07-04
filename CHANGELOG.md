@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+7.4
+---
+
+* Add `MermaidDumper` to dump Role Hierarchy graphs in the Mermaid.js flowchart format
+
 7.3
 ---
 
