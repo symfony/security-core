@@ -54,7 +54,7 @@ class RoleHierarchy implements RoleHierarchyInterface
             $this->map[$main] = $roles;
             $visited = [];
             $additionalRoles = $roles;
-            while ($role = array_shift($additionalRoles)) {
+            while ($role = array_pop($additionalRoles)) {
                 if (!isset($this->hierarchy[$role])) {
                     continue;
                 }
