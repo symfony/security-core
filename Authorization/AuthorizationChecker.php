@@ -30,7 +30,7 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
     public function __construct(TokenStorageInterface $tokenStorage, AccessDecisionManagerInterface $accessDecisionManager, bool $exceptionOnNoToken = false)
     {
         if ($exceptionOnNoToken) {
-            throw new \LogicException(sprintf('Argument $exceptionOnNoToken of "%s()" must be set to "false".', __METHOD__));
+            throw new \LogicException(\sprintf('Argument $exceptionOnNoToken of "%s()" must be set to "false".', __METHOD__));
         }
 
         $this->tokenStorage = $tokenStorage;
