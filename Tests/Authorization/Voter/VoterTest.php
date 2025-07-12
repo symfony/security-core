@@ -97,7 +97,7 @@ class VoterTest_Voter extends Voter
 
     protected function supports(string $attribute, $object): bool
     {
-        return $object instanceof \stdClass && \in_array($attribute, ['EDIT', 'CREATE']);
+        return $object instanceof \stdClass && \in_array($attribute, ['EDIT', 'CREATE'], true);
     }
 }
 
