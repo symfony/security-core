@@ -6,7 +6,10 @@ CHANGELOG
 
  * Remove `RememberMeToken::getSecret()`
  * Remove `UserInterface::eraseCredentials()` and `TokenInterface::eraseCredentials()`,
-  erase credentials e.g. using `__serialize()` instead
+   erase credentials e.g. using `__serialize()` instead
+ * Add argument `$accessDecision` to `AccessDecisionManagerInterface::decide()` and `AuthorizationCheckerInterface::isGranted()`
+ * Add argument `$vote` to `VoterInterface::vote()` and `Voter::voteOnAttribute()`
+ * Add argument `$token` to `UserCheckerInterface::checkPostAuth()`
 
 7.3
 ---
