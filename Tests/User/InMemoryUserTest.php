@@ -12,14 +12,11 @@
 namespace Symfony\Component\Security\Core\Tests\User;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\ExpectUserDeprecationMessageTrait;
 use Symfony\Component\Security\Core\User\InMemoryUser;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class InMemoryUserTest extends TestCase
 {
-    use ExpectUserDeprecationMessageTrait;
-
     public function testConstructorException()
     {
         $this->expectException(\InvalidArgumentException::class);
