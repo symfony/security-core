@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Security\Core\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
@@ -27,9 +28,7 @@ class UserPasswordTest extends TestCase
         self::assertSame('security.validator.user_password', $constraint->validatedBy());
     }
 
-    /**
-     * @dataProvider provideServiceValidatedConstraints
-     */
+    #[DataProvider('provideServiceValidatedConstraints')]
     public function testValidatedByService(UserPassword $constraint)
     {
         self::assertSame('my_service', $constraint->validatedBy());

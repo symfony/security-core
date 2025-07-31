@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Security\Core\Tests\User;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\TestCase;
@@ -72,12 +73,11 @@ class InMemoryUserTest extends TestCase
     }
 
     /**
-     * @dataProvider isEqualToData
-     *
      * @param bool          $expectation
      * @param UserInterface $a
      * @param UserInterface $b
      */
+    #[DataProvider('isEqualToData')]
     public function testIsEqualTo($expectation, $a, $b)
     {
         $this->assertSame($expectation, $a->isEqualTo($b));
