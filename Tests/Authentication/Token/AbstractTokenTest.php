@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Security\Core\Tests\Authentication\Token;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 use Symfony\Component\Security\Core\User\InMemoryUser;
@@ -18,9 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AbstractTokenTest extends TestCase
 {
-    /**
-     * @dataProvider provideUsers
-     */
+    #[DataProvider('provideUsers')]
     public function testGetUserIdentifier($user, string $username)
     {
         $token = new ConcreteToken(['ROLE_FOO']);
@@ -72,9 +71,7 @@ class AbstractTokenTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider provideUsers
-     */
+    #[DataProvider('provideUsers')]
     public function testSetUser($user)
     {
         $token = new ConcreteToken();
