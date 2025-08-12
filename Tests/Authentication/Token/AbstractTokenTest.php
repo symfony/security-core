@@ -72,7 +72,7 @@ class AbstractTokenTest extends TestCase
     }
 
     #[DataProvider('provideUsers')]
-    public function testSetUser($user)
+    public function testSetUser($user, string $username)
     {
         $token = new ConcreteToken();
         $token->setUser($user);
