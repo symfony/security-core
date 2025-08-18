@@ -39,7 +39,7 @@ class UserPasswordTest extends TestCase
         $metadata = new ClassMetadata(UserPasswordDummy::class);
         self::assertTrue((new AttributeLoader())->loadClassMetadata($metadata));
 
-        yield 'attribute' => [$metadata->properties['b']->constraints[0]];
+        yield 'attribute' => [$metadata->getPropertyMetadata('b')[0]->getConstraints()[0]];
     }
 
     public function testAttributes()
@@ -47,12 +47,12 @@ class UserPasswordTest extends TestCase
         $metadata = new ClassMetadata(UserPasswordDummy::class);
         self::assertTrue((new AttributeLoader())->loadClassMetadata($metadata));
 
-        [$bConstraint] = $metadata->properties['b']->getConstraints();
+        [$bConstraint] = $metadata->getPropertyMetadata('b')[0]->getConstraints();
         self::assertSame('myMessage', $bConstraint->message);
         self::assertSame(['Default', 'UserPasswordDummy'], $bConstraint->groups);
         self::assertNull($bConstraint->payload);
 
-        [$cConstraint] = $metadata->properties['c']->getConstraints();
+        [$cConstraint] = $metadata->getPropertyMetadata('c')[0]->getConstraints();
         self::assertSame(['my_group'], $cConstraint->groups);
         self::assertSame('some attached data', $cConstraint->payload);
     }
