@@ -46,10 +46,18 @@ class ChainUserProvider implements UserProviderInterface, PasswordUpgraderInterf
         return $this->providers;
     }
 
-    public function loadUserByIdentifier(string $identifier): UserInterface
+    /**
+     * @param array $attributes
+     */
+    public function loadUserByIdentifier(string $identifier/* , array $attributes = [] */): UserInterface
     {
+        $attributes = \func_num_args() > 1 ? func_get_arg(1) : [];
         foreach ($this->providers as $provider) {
             try {
+                if ($provider instanceof AttributesBasedUserProviderInterface) {
+                    return $provider->loadUserByIdentifier($identifier, $attributes);
+                }
+
                 return $provider->loadUserByIdentifier($identifier);
             } catch (UserNotFoundException) {
                 // try next one
