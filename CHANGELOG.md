@@ -10,6 +10,7 @@ CHANGELOG
  * Add argument `$accessDecision` to `AccessDecisionManagerInterface::decide()` and `AuthorizationCheckerInterface::isGranted()`
  * Add argument `$vote` to `VoterInterface::vote()` and `Voter::voteOnAttribute()`
  * Add argument `$token` to `UserCheckerInterface::checkPostAuth()`
+ * Make `UserChainProvider` implement `AttributesBasedUserProviderInterface`
 
 7.3
 ---
