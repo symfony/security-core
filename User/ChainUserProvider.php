@@ -64,7 +64,7 @@ class ChainUserProvider implements UserProviderInterface, PasswordUpgraderInterf
         $attributes = \func_num_args() > 1 ? func_get_arg(1) : [];
         foreach ($this->providers as $provider) {
             try {
-                if ($provider instanceof AttributesBasedUserProviderInterface) {
+                if ($provider instanceof AttributesBasedUserProviderInterface || $provider instanceof self) {
                     return $provider->loadUserByIdentifier($identifier, $attributes);
                 }
 

@@ -49,6 +49,14 @@ class ChainUserProviderTest extends TestCase
 
     public function testLoadUserByIdentifierWithAttributes()
     {
+        $provider0 = $this->createMock(ChainUserProvider::class);
+        $provider0
+            ->expects($this->once())
+            ->method('loadUserByIdentifier')
+            ->with($this->equalTo('foo'), $this->equalTo(['attr' => 5]))
+            ->willThrowException(new UserNotFoundException('not found'))
+        ;
+
         $provider1 = $this->createMock(UserProviderInterface::class);
         $provider1
             ->expects($this->once())
@@ -65,7 +73,7 @@ class ChainUserProviderTest extends TestCase
             ->willReturn($account = $this->createMock(UserInterface::class))
         ;
 
-        $provider = new ChainUserProvider([$provider1, $provider2]);
+        $provider = new ChainUserProvider([$provider0, $provider1, $provider2]);
         $this->assertSame($account, $provider->loadUserByIdentifier('foo', ['attr' => 5]));
     }
 
