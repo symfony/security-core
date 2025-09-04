@@ -43,8 +43,15 @@ final class PersistentToken implements PersistentTokenInterface
         $this->lastUsed = \DateTimeImmutable::createFromInterface($lastUsed);
     }
 
-    public function getClass(): string
+    /**
+     * @deprecated since Symfony 7.4
+     */
+    public function getClass(bool $triggerDeprecation = true): string
     {
+        if ($triggerDeprecation) {
+            trigger_deprecation('symfony/security-core', '7.4', 'The "%s()" method is deprecated: the user class will be removed from the remember-me cookie in 8.0.', __METHOD__);
+        }
+
         return $this->class;
     }
 
