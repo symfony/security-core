@@ -12,6 +12,11 @@ CHANGELOG
  * Add argument `$token` to `UserCheckerInterface::checkPostAuth()`
  * Make `UserChainProvider` implement `AttributesBasedUserProviderInterface`
 
+7.4
+---
+
+ * Add `MermaidDumper` to dump Role Hierarchy graphs in the Mermaid.js flowchart format
+
 7.3
 ---
 
