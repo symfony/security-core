@@ -11,7 +11,7 @@
 
 namespace Symfony\Component\Security\Core\Dumper;
 
-enum MermaidDirectionEnum: string
+enum MermaidDirection: string
 {
     case TOP_TO_BOTTOM = 'TB';
     case TOP_DOWN = 'TD';

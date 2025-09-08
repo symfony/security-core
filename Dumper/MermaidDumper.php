@@ -25,9 +25,9 @@ class MermaidDumper
      * Dumps the role hierarchy as a Mermaid flowchart.
      *
      * @param RoleHierarchyInterface $roleHierarchy The role hierarchy to dump
-     * @param MermaidDirectionEnum   $direction     The direction of the flowchart
+     * @param MermaidDirection       $direction     The direction of the flowchart
      */
-    public function dump(RoleHierarchyInterface $roleHierarchy, MermaidDirectionEnum $direction = MermaidDirectionEnum::TOP_TO_BOTTOM): string
+    public function dump(RoleHierarchyInterface $roleHierarchy, MermaidDirection $direction = MermaidDirection::TOP_TO_BOTTOM): string
     {
         $hierarchy = $this->extractHierarchy($roleHierarchy);
 
@@ -39,7 +39,7 @@ class MermaidDumper
         $allRoles = $this->getAllRoles($hierarchy);
 
         foreach ($allRoles as $role) {
-            $output[] = $this->formatRoleNode($role);
+            $output[] = '    '.$this->normalizeRoleName($role);
         }
 
         foreach ($hierarchy as $parentRole => $childRoles) {
@@ -76,13 +76,6 @@ class MermaidDumper
         }
 
         return array_unique($allRoles);
-    }
-
-    private function formatRoleNode(string $role): string
-    {
-        $escapedRole = $this->normalizeRoleName($role);
-
-        return "    {$escapedRole}";
     }
 
     /**
