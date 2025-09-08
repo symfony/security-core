@@ -12,7 +12,7 @@
 namespace Symfony\Component\Security\Core\Tests\Dumper;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Security\Core\Dumper\MermaidDirectionEnum;
+use Symfony\Component\Security\Core\Dumper\MermaidDirection;
 use Symfony\Component\Security\Core\Dumper\MermaidDumper;
 use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
@@ -46,7 +46,7 @@ class MermaidDumperTest extends TestCase
 
         $roleHierarchy = new RoleHierarchy($hierarchy);
         $dumper = new MermaidDumper();
-        $output = $dumper->dump($roleHierarchy, MermaidDirectionEnum::LEFT_TO_RIGHT);
+        $output = $dumper->dump($roleHierarchy, MermaidDirection::LEFT_TO_RIGHT);
 
         $this->assertStringContainsString('graph LR', $output);
     }
@@ -97,7 +97,7 @@ class MermaidDumperTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderValidDirection')]
-    public function testValidDirections(MermaidDirectionEnum $direction)
+    public function testValidDirections(MermaidDirection $direction)
     {
         $this->expectNotToPerformAssertions();
         $dumper = new MermaidDumper();
@@ -107,11 +107,11 @@ class MermaidDumperTest extends TestCase
     public static function dataProviderValidDirection()
     {
         return [
-            [MermaidDirectionEnum::TOP_TO_BOTTOM],
-            [MermaidDirectionEnum::TOP_DOWN],
-            [MermaidDirectionEnum::BOTTOM_TO_TOP],
-            [MermaidDirectionEnum::RIGHT_TO_LEFT],
-            [MermaidDirectionEnum::LEFT_TO_RIGHT],
+            [MermaidDirection::TOP_TO_BOTTOM],
+            [MermaidDirection::TOP_DOWN],
+            [MermaidDirection::BOTTOM_TO_TOP],
+            [MermaidDirection::RIGHT_TO_LEFT],
+            [MermaidDirection::LEFT_TO_RIGHT],
         ];
     }
 

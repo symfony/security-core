@@ -30,7 +30,7 @@ class RoleHierarchy implements RoleHierarchyInterface
 
     public function getReachableRoleNames(array $roles): array
     {
-        $reachableRoles = $roles;
+        $reachableRoles = array_combine($roles, $roles);
 
         foreach ($roles as $role) {
             if (!isset($this->map[$role])) {
