@@ -4,6 +4,8 @@ CHANGELOG
 8.0
 ---
 
+ * Remove `PersistentTokenInterface::getClass()`
+ * Remove the user FQCN from the remember-me cookie
  * Remove `RememberMeToken::getSecret()`
  * Remove `UserInterface::eraseCredentials()` and `TokenInterface::eraseCredentials()`,
    erase credentials e.g. using `__serialize()` instead
