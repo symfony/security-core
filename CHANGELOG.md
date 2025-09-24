@@ -4,6 +4,7 @@ CHANGELOG
 8.0
 ---
 
+ * Add argument `$accessDecision` to `AccessDecisionStrategyInterface::decide()`
  * Remove `PersistentTokenInterface::getClass()`
  * Remove the user FQCN from the remember-me cookie
  * Remove `RememberMeToken::getSecret()`
