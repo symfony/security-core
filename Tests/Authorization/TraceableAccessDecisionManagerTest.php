@@ -12,6 +12,7 @@
 namespace Symfony\Component\Security\Core\Tests\Authorization;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
@@ -26,7 +27,7 @@ class TraceableAccessDecisionManagerTest extends TestCase
      */
     public function testDecideLog(array $expectedLog, array $attributes, $object, array $voterVotes, bool $result)
     {
-        $token = $this->createMock(TokenInterface::class);
+        $token = new NullToken();
         $admMock = $this->createMock(AccessDecisionManagerInterface::class);
 
         $adm = new TraceableAccessDecisionManager($admMock);
@@ -176,25 +177,15 @@ class TraceableAccessDecisionManagerTest extends TestCase
      */
     public function testAccessDecisionManagerCalledByVoter()
     {
-        $voter1 = $this
-            ->getMockBuilder(VoterInterface::class)
-            ->onlyMethods(['vote'])
-            ->getMock();
+        $voter1 = $this->createStub(VoterInterface::class);
 
-        $voter2 = $this
-            ->getMockBuilder(VoterInterface::class)
-            ->onlyMethods(['vote'])
-            ->getMock();
+        $voter2 = $this->createStub(VoterInterface::class);
 
-        $voter3 = $this
-            ->getMockBuilder(VoterInterface::class)
-            ->onlyMethods(['vote'])
-            ->getMock();
+        $voter3 = $this->createStub(VoterInterface::class);
 
         $sut = new TraceableAccessDecisionManager(new AccessDecisionManager([$voter1, $voter2, $voter3]));
 
         $voter1
-            ->expects($this->any())
             ->method('vote')
             ->willReturnCallback(function (TokenInterface $token, $subject, array $attributes) use ($sut, $voter1) {
                 $vote = \in_array('attr1', $attributes) ? VoterInterface::ACCESS_GRANTED : VoterInterface::ACCESS_ABSTAIN;
@@ -204,7 +195,6 @@ class TraceableAccessDecisionManagerTest extends TestCase
             });
 
         $voter2
-            ->expects($this->any())
             ->method('vote')
             ->willReturnCallback(function (TokenInterface $token, $subject, array $attributes) use ($sut, $voter2) {
                 if (\in_array('attr2', $attributes)) {
@@ -219,7 +209,6 @@ class TraceableAccessDecisionManagerTest extends TestCase
             });
 
         $voter3
-            ->expects($this->any())
             ->method('vote')
             ->willReturnCallback(function (TokenInterface $token, $subject, array $attributes) use ($sut, $voter3) {
                 if (\in_array('attr2', $attributes) && $subject) {
@@ -233,7 +222,7 @@ class TraceableAccessDecisionManagerTest extends TestCase
                 return $vote;
             });
 
-        $token = $this->createMock(TokenInterface::class);
+        $token = new NullToken();
         $sut->decide($token, ['attr1'], null);
         $sut->decide($token, ['attr2'], $obj = new \stdClass());
 
@@ -270,7 +259,7 @@ class TraceableAccessDecisionManagerTest extends TestCase
 
     public function testCustomAccessDecisionManagerReturnsEmptyStrategy()
     {
-        $admMock = $this->createMock(AccessDecisionManagerInterface::class);
+        $admMock = $this->createStub(AccessDecisionManagerInterface::class);
 
         $adm = new TraceableAccessDecisionManager($admMock);
 
