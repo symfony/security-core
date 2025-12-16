@@ -36,7 +36,7 @@ class TraceableAccessDecisionManagerTest extends TestCase
             ->expects($this->once())
             ->method('decide')
             ->with($token, $attributes, $object)
-            ->willReturnCallback(function ($token, $attributes, $object) use ($voterVotes, $adm, $result) {
+            ->willReturnCallback(static function ($token, $attributes, $object) use ($voterVotes, $adm, $result) {
                 foreach ($voterVotes as $voterVote) {
                     [$voter, $vote] = $voterVote;
                     $adm->addVoterVote($voter, $attributes, $vote);
@@ -197,7 +197,7 @@ class TraceableAccessDecisionManagerTest extends TestCase
         $voter1
             ->expects($this->any())
             ->method('vote')
-            ->willReturnCallback(function (TokenInterface $token, $subject, array $attributes) use ($sut, $voter1) {
+            ->willReturnCallback(static function (TokenInterface $token, $subject, array $attributes) use ($sut, $voter1) {
                 $vote = \in_array('attr1', $attributes, true) ? VoterInterface::ACCESS_GRANTED : VoterInterface::ACCESS_ABSTAIN;
                 $sut->addVoterVote($voter1, $attributes, $vote);
 
@@ -207,7 +207,7 @@ class TraceableAccessDecisionManagerTest extends TestCase
         $voter2
             ->expects($this->any())
             ->method('vote')
-            ->willReturnCallback(function (TokenInterface $token, $subject, array $attributes) use ($sut, $voter2) {
+            ->willReturnCallback(static function (TokenInterface $token, $subject, array $attributes) use ($sut, $voter2) {
                 if (\in_array('attr2', $attributes, true)) {
                     $vote = null == $subject ? VoterInterface::ACCESS_GRANTED : VoterInterface::ACCESS_DENIED;
                 } else {
@@ -222,7 +222,7 @@ class TraceableAccessDecisionManagerTest extends TestCase
         $voter3
             ->expects($this->any())
             ->method('vote')
-            ->willReturnCallback(function (TokenInterface $token, $subject, array $attributes) use ($sut, $voter3) {
+            ->willReturnCallback(static function (TokenInterface $token, $subject, array $attributes) use ($sut, $voter3) {
                 if (\in_array('attr2', $attributes, true) && $subject) {
                     $vote = $sut->decide($token, $attributes) ? VoterInterface::ACCESS_GRANTED : VoterInterface::ACCESS_DENIED;
                 } else {

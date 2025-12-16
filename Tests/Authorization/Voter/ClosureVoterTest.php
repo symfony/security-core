@@ -50,7 +50,7 @@ class ClosureVoterTest extends TestCase
         $this->assertSame(VoterInterface::ACCESS_DENIED, $this->voter->vote(
             $token,
             null,
-            [fn () => false]
+            [static fn () => false]
         ));
     }
 
@@ -63,7 +63,7 @@ class ClosureVoterTest extends TestCase
         $this->assertSame(VoterInterface::ACCESS_GRANTED, $this->voter->vote(
             $token,
             null,
-            [fn () => true]
+            [static fn () => true]
         ));
     }
 
