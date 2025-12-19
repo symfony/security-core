@@ -12,6 +12,7 @@
 namespace Symfony\Component\Security\Core\Tests\Authorization\Voter;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -23,7 +24,7 @@ class VoterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->token = $this->createMock(TokenInterface::class);
+        $this->token = new NullToken();
     }
 
     public static function getTests(): array
