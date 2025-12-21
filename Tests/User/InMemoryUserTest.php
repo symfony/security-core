@@ -86,6 +86,6 @@ class InMemoryUserTest extends TestCase
     public function testIsEqualToWithDifferentUser()
     {
         $user = new InMemoryUser('username', 'password');
-        $this->assertFalse($user->isEqualTo($this->createMock(UserInterface::class)));
+        $this->assertFalse($user->isEqualTo($this->createStub(UserInterface::class)));
     }
 }
