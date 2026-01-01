@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\Security\Core\Tests\Authorization;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -272,11 +271,9 @@ class TraceableAccessDecisionManagerTest extends TestCase
     {
         $accessDecisionManager = new AccessDecisionManager();
         $traceableAccessDecisionManager = new TraceableAccessDecisionManager($accessDecisionManager);
-        /** @var TokenInterface&MockObject $tokenMock */
-        $tokenMock = $this->createMock(TokenInterface::class);
 
         $this->expectException(InvalidArgumentException::class);
-        $traceableAccessDecisionManager->decide($tokenMock, ['attr1', 'attr2']);
+        $traceableAccessDecisionManager->decide(new NullToken(), ['attr1', 'attr2']);
     }
 
     /**
@@ -286,10 +283,8 @@ class TraceableAccessDecisionManagerTest extends TestCase
     {
         $accessDecisionManager = new AccessDecisionManager();
         $traceableAccessDecisionManager = new TraceableAccessDecisionManager($accessDecisionManager);
-        /** @var TokenInterface&MockObject $tokenMock */
-        $tokenMock = $this->createMock(TokenInterface::class);
 
-        $isGranted = $traceableAccessDecisionManager->decide($tokenMock, $attributes, null, null, $allowMultipleAttributes);
+        $isGranted = $traceableAccessDecisionManager->decide(new NullToken(), $attributes, null, null, $allowMultipleAttributes);
 
         $this->assertFalse($isGranted);
     }
