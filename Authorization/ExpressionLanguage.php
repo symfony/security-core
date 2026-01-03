@@ -42,3 +42,5 @@ if (!class_exists(BaseExpressionLanguage::class)) {
         }
     }
 }
+
+// @php-cs-fixer-ignore no_useless_else Keep class-declaration inside if-else condition to help OPCache, especially to prevent class declaration if conditional early-exit on runtime is executed
