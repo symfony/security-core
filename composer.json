@@ -31,6 +31,7 @@
         "symfony/expression-language": "^7.4|^8.0",
         "symfony/http-foundation": "^7.4|^8.0",
         "symfony/ldap": "^7.4|^8.0",
+        "symfony/property-access": "^7.4|^8.0",
         "symfony/string": "^7.4|^8.0",
         "symfony/translation": "^7.4|^8.0",
         "symfony/validator": "^7.4|^8.0"

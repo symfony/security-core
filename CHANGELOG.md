@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+8.1
+---
+
+ * Add support for enums in `SignatureHasher::computeSignatureHash()`
+
 8.0
 ---
 
