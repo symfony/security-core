@@ -26,7 +26,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-abstract class AbstractToken implements TokenInterface, \Serializable
+abstract class AbstractToken implements TokenInterface
 {
     private ?UserInterface $user = null;
     private array $roleNames = [];
@@ -165,21 +165,5 @@ abstract class AbstractToken implements TokenInterface, \Serializable
         }
 
         return \sprintf('%s(user="%s", roles="%s")', $class, $this->getUserIdentifier(), implode(', ', $roles));
-    }
-
-    /**
-     * @internal
-     */
-    final public function serialize(): string
-    {
-        throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
-    }
-
-    /**
-     * @internal
-     */
-    final public function unserialize(string $serialized): void
-    {
-        $this->__unserialize(unserialize($serialized));
     }
 }
