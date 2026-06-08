@@ -44,13 +44,13 @@ class RoleHierarchy implements RoleHierarchyInterface
             }
         }
 
-        return $reachableRoles;
+        return array_values($reachableRoles);
     }
 
     /**
      * @param string[] $roles
      *
-     * @return array<string, string>
+     * @return list<string>
      */
     public function getParentRoleNames(array $roles): array
     {
@@ -66,7 +66,7 @@ class RoleHierarchy implements RoleHierarchyInterface
             }
         }
 
-        return $parentRoles;
+        return array_values($parentRoles);
     }
 
     protected function buildRoleMap(): void
