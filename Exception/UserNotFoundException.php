@@ -54,6 +54,10 @@ class UserNotFoundException extends AuthenticationException
 
     public function __unserialize(array $data): void
     {
+        if (($data[0] ?? null) instanceof \Stringable) {
+            throw new \BadMethodCallException('Cannot unserialize '.self::class);
+        }
+
         [$this->identifier, $parentData] = $data;
         parent::__unserialize($parentData);
     }
