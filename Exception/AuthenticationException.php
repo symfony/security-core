@@ -76,6 +76,12 @@ class AuthenticationException extends RuntimeException
      */
     public function __unserialize(array $data): void
     {
+        if (($data[2] ?? null) instanceof \Stringable
+            || ($data[3] ?? null) instanceof \Stringable
+        ) {
+            throw new \BadMethodCallException('Cannot unserialize '.self::class);
+        }
+
         [$this->token, $this->code, $this->message, $this->file, $this->line] = $data;
     }
 

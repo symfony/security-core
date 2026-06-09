@@ -64,6 +64,10 @@ class CustomUserMessageAccountStatusException extends AccountStatusException
 
     public function __unserialize(array $data): void
     {
+        if (($data[1] ?? null) instanceof \Stringable) {
+            throw new \BadMethodCallException('Cannot unserialize '.self::class);
+        }
+
         [$parentData, $this->messageKey, $this->messageData] = $data;
         parent::__unserialize($parentData);
     }
