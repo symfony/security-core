@@ -29,7 +29,9 @@ class OAuth2User implements UserInterface
         public readonly ?int $iat = null,
         public readonly ?int $nbf = null,
         public readonly ?string $sub = null,
-        public readonly ?string $aud = null,
+        // RFC 7662 §2.2 makes "aud" "a service-specific string identifier or list of string
+        // identifiers", so an authorization server naming several audiences is not a failure
+        public readonly string|array|null $aud = null,
         public readonly ?string $iss = null,
         public readonly ?string $jti = null,
 

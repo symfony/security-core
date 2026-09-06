@@ -24,6 +24,18 @@ class OAuth2UserTest extends TestCase
         new OAuth2User();
     }
 
+    /**
+     * RFC 7662 §2.2 makes "aud" "a service-specific string identifier or list of string
+     * identifiers", so the introspection response of a token minted for several resource servers
+     * has to build a user just as well.
+     */
+    public function testCreateUserWithSeveralAudiences()
+    {
+        $user = new OAuth2User(sub: 'Z5O3upPC88QrAjx00dis', aud: ['https://protected.example.net/resource', 'https://other.example.net']);
+
+        $this->assertSame(['https://protected.example.net/resource', 'https://other.example.net'], $user->aud);
+    }
+
     public function testCreateFullUserWithAdditionalClaimsUsingPositionalParameters()
     {
         $this->assertEquals(new OAuth2User(
